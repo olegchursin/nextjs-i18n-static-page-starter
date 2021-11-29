@@ -1,9 +1,3 @@
-/* purgecss start ignore */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/* purgecss end ignore */
-
 html,
 body {
 	padding: 0;

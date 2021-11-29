@@ -1,17 +1,21 @@
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { languages, defaultLanguage } from './config';
+import { defaultLanguage, languages } from './config';
+
+import type { InitOptions } from 'i18next';
 
 const locales = Object.assign(
 	{},
-	...Object.keys(languages).map((index) => {
+	...Object.keys(languages).map(index => {
 		return {
 			[languages[index]]: {
-				translations: require('../locales/' + languages[index] + '/translation.json'),
-			},
+				translations: require('../locales/' +
+					languages[index] +
+					'/translation.json')
+			}
 		};
-	}),
+	})
 );
 
 const detection = {
@@ -24,24 +28,21 @@ const detection = {
 		'navigator',
 		'htmlTag',
 		'path',
-		'subdomain',
+		'subdomain'
 	],
-
 	// keys or params to lookup language from
 	lookupCookie: 'lng',
 	lookupLocalStorage: 'lng',
 	lookupFromPathIndex: 0,
 	lookupFromSubdomainIndex: 0,
-
 	// cache user language on
 	caches: ['localStorage', 'cookie'],
 	excludeCacheFor: ['cimode'], // languages to not persist (cookie, localStorage)
-
 	// optional set cookie options, reference:[MDN Set-Cookie docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
-	cookieOptions: { path: '/', sameSite: 'strict' },
+	cookieOptions: { path: '/', sameSite: 'strict' }
 };
 
-i18next.use(LanguageDetector).init({
+const i18nInitOpts: InitOptions = {
 	detection: detection,
 	fallbackLng: defaultLanguage,
 	resources: locales,
@@ -50,11 +51,12 @@ i18next.use(LanguageDetector).init({
 	returnObjects: true,
 	debug: false,
 	interpolation: {
-		escapeValue: false, // not needed for react!!
+		escapeValue: false // not needed for react!!
 	},
 	react: {
-		wait: true,
-	},
-});
+		wait: true
+	}
+};
+i18next.use(LanguageDetector).init(i18nInitOpts);
 
 export default i18next;
