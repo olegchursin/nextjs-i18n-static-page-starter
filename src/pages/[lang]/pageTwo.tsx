@@ -4,11 +4,15 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { getAllLanguageSlugs, getLanguage } from '../../lib/lang';
 
-export default function LangIndex({ language }) {
+interface IPageTwo {
+	readonly language: string;
+}
+
+const PageTwo: React.FC<IPageTwo> = ({ language }) => {
 	return (
 		<Layout>
 			<h3>
-				Homepage: <code>pages/[lang]/index.tsx</code>
+				Page Two: <code>pages/[lang]/pageTwo.tsx</code>
 			</h3>
 
 			<h3>
@@ -17,16 +21,14 @@ export default function LangIndex({ language }) {
 
 			<p>{i18next.t('helloWorld')}</p>
 
-			<Link
-				prefetch={false}
-				href={`/[lang]/pageTwo`}
-				as={`/${language}/pageTwo`}
-			>
-				<a>/{language}/pageTwo</a>
+			<Link prefetch={false} href={`/[lang]`} as={`/${language}`}>
+				<a>Back to homepage</a>
 			</Link>
 		</Layout>
 	);
-}
+};
+
+export default PageTwo;
 
 export async function getStaticPaths() {
 	const paths = getAllLanguageSlugs();

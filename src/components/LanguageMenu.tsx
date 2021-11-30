@@ -10,17 +10,14 @@ const LanguageMenu: React.FC = () => {
 	const { pathname } = router;
 
 	return (
-		<div className="flex flex-wrap content-end text-gray-300">
+		<div className="language-menu">
 			{languages.map((lang, index) => {
-				const current = [
-					'uppercase',
-					i18next.language === lang ? 'text-blue-600' : ''
-				];
+				const isActive = i18next.language === lang;
 				const path = pathname.replace(/\[lang\]/i, lang);
 
 				return (
 					<Link key={index} prefetch={false} href={pathname} as={path}>
-						<a>{i18next.t(lang)}</a>
+						<a className={isActive ? 'active' : ''}>{i18next.t(lang)}</a>
 					</Link>
 				);
 			})}
